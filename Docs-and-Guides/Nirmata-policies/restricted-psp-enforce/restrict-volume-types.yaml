@@ -26,6 +26,8 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - test
       validate:
         message: >-
           Using volume types beyond those listed in the policy rule is disallowed.
