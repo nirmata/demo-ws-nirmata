@@ -27,6 +27,8 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - test
       validate:
         message: >-
           Running the container as root is not allowed.
