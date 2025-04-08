@@ -1,4 +1,4 @@
-# PoV-lt
+# PoV-LT
 
 All PoV-related guides and resources are located in the Docs-and-Guides/ directory. 
 
