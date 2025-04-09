@@ -1,7 +1,7 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: require-run-as-nonroot
+  name: require-run-as-nonroot-enforce
   annotations:
     policies.kyverno.io/title: Require runAsNonRoot
     policies.kyverno.io/category: Pod Security Standards (Restricted)
@@ -21,7 +21,7 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: run-as-non-root
+    - name: run-as-non-root-enforce
       match:
         any:
           - resources:
