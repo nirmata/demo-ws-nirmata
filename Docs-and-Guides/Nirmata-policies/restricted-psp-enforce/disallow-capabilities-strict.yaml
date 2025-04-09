@@ -18,7 +18,7 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: require-drop-all
+    - name: require-drop-all-enforce
       match:
         any:
           - resources:
