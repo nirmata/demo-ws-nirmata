@@ -17,7 +17,7 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: privilege-escalation
+    - name: privilege-escalation-enforce
       match:
         any:
         - resources:
