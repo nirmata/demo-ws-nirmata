@@ -1,7 +1,7 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: disallow-capabilities-strict
+  name: disallow-capabilities-strict-enforce
   annotations:
     policies.kyverno.io/title: Disallow Capabilities (Strict)
     policies.kyverno.io/category: Pod Security Standards (Restricted)
