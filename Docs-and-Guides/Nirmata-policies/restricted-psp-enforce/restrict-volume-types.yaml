@@ -1,7 +1,7 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: restrict-volume-types
+  name: restrict-volume-types-enforce
   annotations:
     policies.kyverno.io/title: Restrict Volume Types
     policies.kyverno.io/category: Pod Security Standards (Restricted)
@@ -18,7 +18,7 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: restricted-volumes
+    - name: restricted-volumes-enforce
       match:
         any:
         - resources:
