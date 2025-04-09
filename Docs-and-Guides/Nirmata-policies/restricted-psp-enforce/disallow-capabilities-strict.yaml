@@ -42,7 +42,7 @@ spec:
                   - key: ALL
                     operator: AnyNotIn
                     value: "{{ element.securityContext.capabilities.drop[] || `[]` }}"
-    - name: adding-capabilities-strict
+    - name: adding-capabilities-strict-enforce
       match:
         any:
           - resources:
