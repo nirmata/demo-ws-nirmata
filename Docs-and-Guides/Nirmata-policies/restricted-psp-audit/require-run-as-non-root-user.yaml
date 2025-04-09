@@ -5,14 +5,17 @@ metadata:
   annotations:
     policies.kyverno.io/title: Require Run As Non-Root User
     policies.kyverno.io/category: Pod Security Standards (Restricted)
-    policies.kyverno.io/severity: medium
+    policies.kyverno.io/severity: critical
     policies.kyverno.io/subject: Pod
-    kyverno.io/kyverno-version: 1.6.0
     kyverno.io/kubernetes-version: "1.22-1.23"
-    policies.nirmata.io/remediation: "https://docs.nirmata.io/policysets/podsecurity/restricted/require-run-as-non-root-user/"
+    policies.nirmata.io/remediation-docs: "https://docs.nirmata.io/policysets/podsecurity/restricted/require-run-as-non-root-user/"
+    policies.nirmata.io/remediation: "https://github.com/nirmata/kyverno-policies/tree/main/pod-security/restricted/require-run-as-non-root-user/remediate-require-run-as-non-root-user.yaml"
     policies.kyverno.io/description: >-
-      Containers must be required to run as non-root users. This policy ensures
-      `runAsUser` is either unset or set to a number greater than zero.      
+      Containers must be required to run as non-root users. This policy ensures that the fields 
+      spec.securityContext.runAsUser,
+      spec.containers[*].securityContext.runAsUser, spec.initContainers[*].securityContext.runAsUser,
+      and spec.ephemeralContainers[*].securityContext.runAsUser is either unset or
+      set to a number greater than zero.
 spec:
   validationFailureAction: Audit
   background: true
@@ -20,26 +23,22 @@ spec:
     - name: run-as-non-root-user
       match:
         any:
-        - resources:
-            kinds:
-              - Pod
+          - resources:
+              kinds:
+                - Pod
       validate:
         message: >-
-          Running as root is not allowed. The fields spec.securityContext.runAsUser,
-          spec.containers[*].securityContext.runAsUser, spec.initContainers[*].securityContext.runAsUser,
-          and spec.ephemeralContainers[*].securityContext.runAsUser must be unset or
-          set to a number greater than zero.          
+          Running the container as root user is not allowed.
         pattern:
           spec:
             =(securityContext):
               =(runAsUser): ">0"
             =(ephemeralContainers):
-            - =(securityContext):
-                =(runAsUser): ">0"
+              - =(securityContext):
+                  =(runAsUser): ">0"
             =(initContainers):
-            - =(securityContext):
-                =(runAsUser): ">0"
+              - =(securityContext):
+                  =(runAsUser): ">0"
             containers:
-            - =(securityContext):
-                =(runAsUser): ">0"
-
+              - =(securityContext):
+                  =(runAsUser): ">0"
