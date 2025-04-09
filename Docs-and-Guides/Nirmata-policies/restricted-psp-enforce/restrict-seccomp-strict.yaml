@@ -1,7 +1,7 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: restrict-seccomp-strict
+  name: restrict-seccomp-strict-enforce
   annotations:
     policies.kyverno.io/title: Restrict Seccomp (Strict)
     policies.kyverno.io/category: Pod Security Standards (Restricted)
@@ -24,7 +24,7 @@ spec:
   background: true
   validationFailureAction: Enforce
   rules:
-    - name: check-seccomp-strict
+    - name: check-seccomp-strict-enforce
       match:
         any:
           - resources:
