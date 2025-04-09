@@ -17,7 +17,7 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: run-as-non-root-user
+    - name: run-as-non-root-user-enforce
       match:
         any:
         - resources:
