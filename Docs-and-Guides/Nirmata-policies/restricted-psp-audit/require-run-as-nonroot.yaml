@@ -27,6 +27,9 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - nginx
+                - keith-demo
       validate:
         message: >-
           Running the container as root is not allowed.
