@@ -32,7 +32,7 @@ spec:
                 - Pod
               namespaces:
                 - nginx
-                - keith-demo
+                - demo
       validate:
         message: >-
           Use of custom Seccomp profiles is disallowed.
