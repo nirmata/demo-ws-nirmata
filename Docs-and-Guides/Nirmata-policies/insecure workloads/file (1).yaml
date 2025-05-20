@@ -1,0 +1,116 @@
+# Violates require-run-as-nonroot.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-alpha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-alpha
+  template:
+    metadata:
+      labels:
+        app: app-alpha
+    spec:
+      containers:
+      - name: app-alpha
+        image: busybox
+        command: ["sleep", "3600"]
+        securityContext:
+          runAsUser: 0  # Runs as root
+---
+# Violates disallow-privilege-escalation.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-bravo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-bravo
+  template:
+    metadata:
+      labels:
+        app: service-bravo
+    spec:
+      containers:
+      - name: service-bravo
+        image: busybox
+        command: ["sleep", "3600"]
+        securityContext:
+          allowPrivilegeEscalation: true
+---
+# Violates disallow-capabilities-strict.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-charlie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-charlie
+  template:
+    metadata:
+      labels:
+        app: backend-charlie
+    spec:
+      containers:
+      - name: backend-charlie
+        image: busybox
+        command: ["sleep", "3600"]
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN", "SYS_ADMIN"]
+---
+# Violates restrict-volume-types.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-delta
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-delta
+  template:
+    metadata:
+      labels:
+        app: frontend-delta
+    spec:
+      containers:
+      - name: frontend-delta
+        image: busybox
+        command: ["sleep", "3600"]
+        volumeMounts:
+        - name: host-volume
+          mountPath: /host
+      volumes:
+      - name: host-volume
+        hostPath:
+          path: /etc
+---
+# Violates restrict-seccomp-strict.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-echo
+  template:
+    metadata:
+      labels:
+        app: api-echo
+    spec:
+      containers:
+      - name: api-echo
+        image: busybox
+        command: ["sleep", "3600"]
+        securityContext:
+          seccompProfile:
+            type: Unconfined 
